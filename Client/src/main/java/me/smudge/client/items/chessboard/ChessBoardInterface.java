@@ -5,8 +5,6 @@ import me.smudge.client.positions.ModularPosition;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Represents the interface for the chessboard
@@ -41,6 +39,7 @@ public abstract class ChessBoardInterface extends Item {
         this.panel.setBackground(Color.white);
         this.getBoard().render(this.panel);
 
+        // Adding a listener to all buttons
         for (Component component : this.panel.getComponents()) {
             if (!(component instanceof JButton button)) continue;
             button.addActionListener(event -> this.onClick(this.getBoard().getTileAt(this.getMouseLocation())));
@@ -62,14 +61,17 @@ public abstract class ChessBoardInterface extends Item {
      */
     public abstract void onClick(Tile tile);
 
+    /**
+     * Item hover events
+     */
+    @Override public void onHover() {}
+    @Override public void onNotHover() {}
+
     @Override
     public void updateItem() {
         if (this.getBoard() == null) return;
         this.onTileHover(this.getBoard().getTileAt(this.getMouseLocation()));
     }
-
-    @Override public void onHover() {}
-    @Override public void onNotHover() {}
 
     @Override
     public void render(JPanel frame) {

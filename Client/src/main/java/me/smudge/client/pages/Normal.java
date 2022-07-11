@@ -1,11 +1,11 @@
 package me.smudge.client.pages;
 
-import me.smudge.client.controllers.Bot;
 import me.smudge.client.controllers.Player;
 import me.smudge.client.items.ItemCollection;
 import me.smudge.client.items.chessboard.ChessBoard;
 import me.smudge.client.items.chessboard.ChessColour;
 import me.smudge.client.items.chessboard.layout.DefaultBoardLayout;
+import me.smudge.client.positions.BoardSize;
 import me.smudge.client.positions.ModularPosition;
 import me.smudge.client.positions.Position;
 
@@ -29,8 +29,11 @@ public class Normal extends Page {
                 ).setToFirstPosition(),
 
                 new Player(ChessColour.WHITE),
-                new Player(ChessColour.BLACK)
+                new Player(ChessColour.BLACK),
+
+                new BoardSize(8, 8)
         );
+
         chessBoard.getBoard().setLayout(new DefaultBoardLayout());
 
         this.itemCollection.addItem(chessBoard);

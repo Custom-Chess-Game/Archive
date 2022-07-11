@@ -1,7 +1,6 @@
 package me.smudge.client.items.chessboard;
 
 import me.smudge.client.items.chessboard.pieces.Piece;
-import me.smudge.client.positions.Position;
 import me.smudge.client.positions.Region2D;
 import me.smudge.client.positions.TilePosition;
 

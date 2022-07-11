@@ -1,5 +1,6 @@
 package me.smudge.client.controllers;
 
+import me.smudge.client.items.chessboard.Board;
 import me.smudge.client.items.chessboard.ChessColour;
 
 /**
@@ -13,5 +14,10 @@ public class Bot extends Controller {
     @Override
     public boolean canClick() {
         return false;
+    }
+
+    @Override
+    public void onMyTurn(Board board) {
+
     }
 }

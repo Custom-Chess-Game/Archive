@@ -2,9 +2,9 @@ package me.smudge.client.items.chessboard;
 
 import me.smudge.client.engine.Application;
 import me.smudge.client.items.chessboard.layout.BoardLayout;
+import me.smudge.client.positions.Position;
 import me.smudge.client.positions.Region2D;
 import me.smudge.client.positions.TilePosition;
-import me.smudge.client.positions.Position;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -286,43 +286,6 @@ public class Board {
         }
 
         return tiles;
-
-//        ArrayList<Tile> tilesToCheckCanTake = tile.getPiece().getTakePositions(this, tile);
-//        ArrayList<Tile> tilesToCheckCanMove = tile.getPiece().getValidPositions(this, tile);
-//
-//        tilesToCheckCanMove.addAll(tilesToCheckCanTake);
-
-//        // Loop for all the tiles the piece could move into
-//        for (Tile temp : tilesToCheckCanMove) {
-//            if (temp == null) continue;
-//
-//            // If there is a piece in the square
-//            if (temp.getPiece() != null) {
-//
-//                // Check if the piece can take it
-//                if (!tilesToCheckCanTake.contains(temp)) continue;
-//
-//                this.tiles.add(temp);
-//            }
-//
-//            // If there is not a piece in the tile, and it's a take move, don't include tile
-//            if (temp.getPiece() == null && tilesToCheckCanTake.contains(temp) &&
-//                    !tile.getPiece().getValidPositions(this, tile).contains(temp)) {
-//                continue;
-//            }
-//
-//            if (this.getPiecesBetween(tile, temp) == 0) tiles.add(temp);
-//
-//            if (temp.getPiece() == null) continue;
-//
-//            if (tile.getPiece().canJump() && tile.getPiece().getColour() != temp.getPiece().getColour()) tiles.add(temp);
-//
-//            if (tilesToCheckCanTake.contains(temp) &&
-//                this.getPiecesBetween(tile, temp) == 1 &&
-//                tile.getPiece().getColour() != temp.getPiece().getColour()) tiles.add(temp);
-//        }
-//
-//        return tiles;
     }
 
     public ArrayList<Tile> getAllTiles() {

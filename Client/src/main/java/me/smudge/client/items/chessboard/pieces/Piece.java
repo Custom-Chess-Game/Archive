@@ -3,7 +3,6 @@ package me.smudge.client.items.chessboard.pieces;
 import me.smudge.client.items.chessboard.Board;
 import me.smudge.client.items.chessboard.ChessColour;
 import me.smudge.client.items.chessboard.Tile;
-import me.smudge.client.positions.TilePosition;
 
 import javax.swing.*;
 import java.util.ArrayList;

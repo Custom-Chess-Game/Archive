@@ -38,11 +38,17 @@ public class TilePosition extends Position {
         return null;
     }
 
+    /**
+     * Used to check if the position isn't (0, 0)
+     */
     public boolean not0() {
-        if (this.x == 0 && this.y == 0) return false;
-        return true;
+        return this.x != 0 || this.y != 0;
     }
 
+    /**
+     * Used to decrease the position to (0, 0)
+     * On each call of the method, both x and y will decrease
+     */
     public TilePosition decrease() {
         if (this.x != 0) {
             if (this.x > 0) this.x -= 1;
