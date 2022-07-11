@@ -50,4 +50,9 @@ public class Knight extends Piece {
 
         return tiles;
     }
+
+    @Override
+    public ArrayList<Tile> getTakePositions(Board board, Tile tile) {
+        return this.getValidPositions(board, tile);
+    }
 }

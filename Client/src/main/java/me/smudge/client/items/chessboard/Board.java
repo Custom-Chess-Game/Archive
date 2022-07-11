@@ -41,7 +41,7 @@ public class Board {
      * However, the order of the tiles does not matter when rendering
      * as it's based on the tile position.
      */
-    private final ArrayList<Tile> tiles = new ArrayList<>();
+    private ArrayList<Tile> tiles = new ArrayList<>();
 
     /**
      * Create a new instance of {@link Board}
@@ -141,8 +141,9 @@ public class Board {
      */
     private HashMap<Integer, JButton> getSortedListOfTiles(JButton panel) {
         HashMap<Integer, JButton> listOfTiles = new HashMap<>();
+        ArrayList<Tile> tiles = new ArrayList<>(this.tiles);
 
-        for (Tile tile : this.tiles) {
+        for (Tile tile : tiles) {
             JButton tilePanel = new JButton();
             tile.render(tilePanel);
             tilePanel.setVisible(true);
@@ -209,11 +210,19 @@ public class Board {
         return tile.getPiece() != null;
     }
 
-    public boolean isPieceBetween(Tile tile1, Tile tile2) {
+    public int getPiecesBetween(Tile tile1, Tile tile2) {
+        System.out.println("------ DEBUG ------");
         TilePosition vector = new TilePosition(
                 tile2.getTilePosition().getX() - tile1.getTilePosition().getX(),
                 tile2.getTilePosition().getY() - tile1.getTilePosition().getY()
         );
+        System.out.println("Starting Vector : " + vector.asString());
+        System.out.println("From : " + tile1.getTilePosition().asString());
+        System.out.println("To : " + tile2.getTilePosition().asString());
+
+        // (5, -5)
+
+        int amount = 0;
 
         while (vector.not0()) {
             TilePosition temp = tile1.getTilePosition().add(
@@ -222,18 +231,15 @@ public class Board {
             );
 
             if (this.isPieceAt(temp)) {
-//                System.out.println("------ DEBUG ------");
-//                System.out.println("Position where there is a piece : " + temp.asString());
-//                System.out.println("Vector : " + vector.asString());
-//                System.out.println("From : " + tile1.getTilePosition().asString());
-//                System.out.println("To : " + tile2.getTilePosition().asString());
-                return true;
+                System.out.println("=>" + "Position where there is a piece : " + temp.asString());
+                System.out.println("Vector : " + vector.asString());
+                amount ++;
             }
 
             vector = vector.decrease();
         }
 
-        return false;
+        return amount;
     }
 
     /**
@@ -247,15 +253,76 @@ public class Board {
 
         ArrayList<Tile> tiles = new ArrayList<>();
 
+        // Add tiles that have no pieces on
         for (Tile temp : tile.getPiece().getValidPositions(this, tile)) {
-            if (temp == null || temp.getPiece() != null) continue;
+            if (temp == null) continue;
+            if (temp.getPiece() != null) continue;
 
-            if (tile.getPiece().canJump()) tiles.add(temp);
+            // Is there a piece blocking the square
+            if (this.getPiecesBetween(tile, temp) > 0) {
+                if (!tile.getPiece().canJump()) continue;
+            }
+            tiles.add(temp);
+        }
 
-            if (!isPieceBetween(tile, temp)) tiles.add(temp);
+        // Add tiles that the piece can take
+        for (Tile temp : tile.getPiece().getTakePositions(this, tile)) {
+            if (temp == null) continue;
+            if (temp.getPiece() == null) continue;
+
+            // If the piece is the other players colour
+            if (temp.getPiece().getColour() == tile.getPiece().getColour()) continue;
+
+            // If the piece can jump
+            if (tile.getPiece().canJump()) {
+                tiles.add(temp);
+                continue;
+            }
+
+            // If the piece is blocked
+            if (this.getPiecesBetween(tile, temp) > 1) continue;
+
+            tiles.add(temp);
         }
 
         return tiles;
+
+//        ArrayList<Tile> tilesToCheckCanTake = tile.getPiece().getTakePositions(this, tile);
+//        ArrayList<Tile> tilesToCheckCanMove = tile.getPiece().getValidPositions(this, tile);
+//
+//        tilesToCheckCanMove.addAll(tilesToCheckCanTake);
+
+//        // Loop for all the tiles the piece could move into
+//        for (Tile temp : tilesToCheckCanMove) {
+//            if (temp == null) continue;
+//
+//            // If there is a piece in the square
+//            if (temp.getPiece() != null) {
+//
+//                // Check if the piece can take it
+//                if (!tilesToCheckCanTake.contains(temp)) continue;
+//
+//                this.tiles.add(temp);
+//            }
+//
+//            // If there is not a piece in the tile, and it's a take move, don't include tile
+//            if (temp.getPiece() == null && tilesToCheckCanTake.contains(temp) &&
+//                    !tile.getPiece().getValidPositions(this, tile).contains(temp)) {
+//                continue;
+//            }
+//
+//            if (this.getPiecesBetween(tile, temp) == 0) tiles.add(temp);
+//
+//            if (temp.getPiece() == null) continue;
+//
+//            if (tile.getPiece().canJump() && tile.getPiece().getColour() != temp.getPiece().getColour()) tiles.add(temp);
+//
+//            if (tilesToCheckCanTake.contains(temp) &&
+//                this.getPiecesBetween(tile, temp) == 1 &&
+//                tile.getPiece().getColour() != temp.getPiece().getColour()) tiles.add(temp);
+//        }
+//
+//        return tiles;
     }
 
     public ArrayList<Tile> getAllTiles() {

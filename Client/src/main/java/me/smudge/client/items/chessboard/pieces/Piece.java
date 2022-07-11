@@ -62,4 +62,10 @@ public abstract class Piece {
      * @return Valid tiles
      */
     public abstract ArrayList<Tile> getValidPositions(Board board, Tile tile);
+
+    /**
+     * Used to get the positions that the piece can take other pieces from
+     * @return Valid tiles
+     */
+    public abstract ArrayList<Tile> getTakePositions(Board board, Tile tile);
 }

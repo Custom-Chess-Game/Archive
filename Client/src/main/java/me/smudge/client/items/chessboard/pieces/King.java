@@ -49,4 +49,9 @@ public class King extends Piece {
         tiles.add(board.getTile(position.addVector(-1, -1, this.getColour())));
         return tiles;
     }
+
+    @Override
+    public ArrayList<Tile> getTakePositions(Board board, Tile tile) {
+        return this.getValidPositions(board, tile);
+    }
 }

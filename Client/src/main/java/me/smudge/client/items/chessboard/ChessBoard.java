@@ -32,6 +32,7 @@ public class ChessBoard extends ChessBoardInterface {
      * When a player clicks a tile it is stored here
      */
     private Tile store;
+    private Tile hoverStore;
 
     /**
      * The tile the player is hovering over
@@ -62,30 +63,51 @@ public class ChessBoard extends ChessBoardInterface {
     @Override
     public void onTileHover(Tile tile) {
 
+        // If a piece is selected
+        if (this.store != null && this.store.getPiece() != null) {
+
+            // If it's a new piece remove old color
+            if (this.store != this.hoverStore) {
+                if (this.hoverStore != null) this.resetTiles(this.tileHovering);
+                this.hoverStore = this.store;
+            }
+
+            // color new pieces tiles
+            this.colourTiles(this.store);
+            return;
+        }
+
         // If the hovered tile has changed
         if (this.tileHovering != null && tile != this.tileHovering) {
-            ArrayList<Tile> tiles = this.board.getPossibleMoves(this.tileHovering);
-            if (tiles != null) {
-                for (Tile temp : tiles) {
-                    if (temp == null) continue;
-                    temp.setTileColour(temp.tileColour.asColour());
-                }
-            }
+            this.resetTiles(this.tileHovering);
         }
 
         // Set colour for available places to move
         if (tile != null && tile.getPiece() != null) {
-            ArrayList<Tile> tiles = this.board.getPossibleMoves(tile);
-            if (tiles != null) {
-                for (Tile temp : tiles) {
-                    if (temp == null) continue;
-                    if (tile.getPiece().canJump()) temp.setTileColour(Color.yellow);
-                    else temp.setTileColour(Color.green);
-                }
-            }
+            this.colourTiles(tile);
         }
 
         this.tileHovering = tile;
+    }
+
+    public void resetTiles(Tile tile) {
+        ArrayList<Tile> tiles = this.board.getPossibleMoves(tile);
+        if (tiles == null) return;
+        for (Tile temp : tiles) {
+            if (temp == null) continue;
+            temp.setTileColour(temp.tileColour.asColour());
+        }
+    }
+
+    private void colourTiles(Tile tile) {
+        ArrayList<Tile> tiles = this.board.getPossibleMoves(tile);
+        if (tiles != null) {
+            for (Tile temp : tiles) {
+                if (temp == null) continue;
+                if (tile.getPiece().canJump()) temp.setTileColour(Color.yellow);
+                else temp.setTileColour(Color.green);
+            }
+        }
     }
 
     @Override
@@ -98,15 +120,23 @@ public class ChessBoard extends ChessBoardInterface {
         if (this.board.getPossibleMoves(this.store).contains(tile)) {
             tile.setPiece(this.store.getPiece());
             this.store.setEmpty();
-            Application.render();
-            this.board.flip();
-            this.store = null;
+            this.switchTurn();
         }
-        else this.store = tile;
+
+        if (!(this.board.isPieceAt(tile.getTilePosition()) && tile.getPiece().getColour() != this.turn)) {
+            this.store = tile;
+        }
     }
 
     private Controller getWhoseTurn() {
         if (this.turn == this.player1.getColour()) return this.player1;
         return this.player2;
+    }
+
+    private void switchTurn() {
+        Application.render();
+        this.board.flip();
+        this.store = null;
+        this.turn = ChessColour.opposite(this.turn);
     }
 }

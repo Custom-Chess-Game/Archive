@@ -50,4 +50,15 @@ public class Pawn extends Piece {
 
         return tiles;
     }
+
+    @Override
+    public ArrayList<Tile> getTakePositions(Board board, Tile tile) {
+        ArrayList<Tile> tiles = new ArrayList<>();
+        TilePosition position = tile.getTilePosition();
+
+        tiles.add(board.getTile(position.addVector(1, 1, this.getColour())));
+        tiles.add(board.getTile(position.addVector(-1, 1, this.getColour())));
+
+        return tiles;
+    }
 }

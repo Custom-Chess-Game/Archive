@@ -12,11 +12,6 @@ public class Region2D {
     public Position pos2;
 
     /**
-     * Create an empty region
-     */
-    public Region2D() {}
-
-    /**
      * Create a new instance of a region
      * @param pos1 The first position
      * @param pos2 The second position

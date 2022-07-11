@@ -45,12 +45,13 @@ public class TilePosition extends Position {
 
     public TilePosition decrease() {
         if (this.x != 0) {
-            if (this.x > 0) return this.add(-1 , 0);
-            else return this.add(1 , 0);
+            if (this.x > 0) this.x -= 1;
+            if (this.x < 0) this.x += 1;
         }
-        else {
-            if (this.y > 0) return this.add(0 , -1);
-            else return this.add(0 , 1);
+        if (this.y != 0) {
+            if (this.y > 0) this.y -= 1;
+            if (this.y < 0) this.y += 1;
         }
+        return this;
     }
 }

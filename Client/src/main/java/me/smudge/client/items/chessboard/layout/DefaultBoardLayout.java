@@ -50,9 +50,5 @@ public class DefaultBoardLayout extends BoardLayout {
         board.getTile(new TilePosition(6, 2)).setPiece(new Pawn(ChessColour.WHITE));
         board.getTile(new TilePosition(7, 2)).setPiece(new Pawn(ChessColour.WHITE));
         board.getTile(new TilePosition(8, 2)).setPiece(new Pawn(ChessColour.WHITE));
-
-
-        // board.getTile(new TilePosition(5, 5)).setPiece(new OP(ChessColour.WHITE));
-        board.getTile(new TilePosition(4, 3)).setPiece(new Cyclopes(ChessColour.BLACK));
     }
 }
