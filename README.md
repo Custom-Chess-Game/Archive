@@ -1,2 +1,1 @@
-# Chess-A-Level-
-My A-Level project
+# A java chess game
