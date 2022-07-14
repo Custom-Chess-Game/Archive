@@ -1,8 +1,8 @@
 package me.smudge.client.items.chessboard.pieces;
 
-import me.smudge.client.items.chessboard.Board;
-import me.smudge.client.items.chessboard.ChessColour;
-import me.smudge.client.items.chessboard.Tile;
+import me.smudge.client.game.ChessBoard;
+import me.smudge.client.game.ChessColour;
+import me.smudge.client.game.Tile;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -37,6 +37,13 @@ public abstract class Piece {
     public abstract boolean canJump();
 
     /**
+     * Used to get the value of the piece that an algorithm can use
+     * to determine what is the best move to make
+     * @return Value of the piece as an integer
+     */
+    public abstract int getValue();
+
+    /**
      * Get piece colour
      */
     public ChessColour getColour() {
@@ -60,11 +67,11 @@ public abstract class Piece {
      * Used to get valid positions on the board
      * @return Valid tiles
      */
-    public abstract ArrayList<Tile> getValidPositions(Board board, Tile tile);
+    public abstract ArrayList<Tile> getValidPositions(ChessBoard board, Tile tile);
 
     /**
      * Used to get the positions that the piece can take other pieces from
      * @return Valid tiles
      */
-    public abstract ArrayList<Tile> getTakePositions(Board board, Tile tile);
+    public abstract ArrayList<Tile> getTakePositions(ChessBoard board, Tile tile);
 }

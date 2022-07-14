@@ -1,7 +1,7 @@
 package me.smudge.client.controllers;
 
-import me.smudge.client.items.chessboard.Board;
-import me.smudge.client.items.chessboard.ChessColour;
+import me.smudge.client.game.ChessBoard;
+import me.smudge.client.game.ChessColour;
 
 /**
  * Represents one of the players in the game
@@ -29,8 +29,9 @@ public abstract class Controller {
     /**
      * Called when it's the turn of the controllers
      * @param board The instance of the chess board
+     * @return
      */
-    public abstract void onMyTurn(Board board);
+    public abstract boolean onMyTurn(ChessBoard board);
 
     /**
      * Used to get the controllers colour that they play as

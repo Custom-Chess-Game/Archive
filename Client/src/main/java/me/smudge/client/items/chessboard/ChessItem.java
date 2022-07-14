@@ -1,5 +1,7 @@
 package me.smudge.client.items.chessboard;
 
+import me.smudge.client.game.ChessBoard;
+import me.smudge.client.game.Tile;
 import me.smudge.client.items.Item;
 import me.smudge.client.positions.ModularPosition;
 
@@ -9,7 +11,7 @@ import java.awt.*;
 /**
  * Represents the interface for the chessboard
  */
-public abstract class ChessBoardInterface extends Item {
+public abstract class ChessItem extends Item {
 
     /**
      * The chessboard panel
@@ -20,7 +22,7 @@ public abstract class ChessBoardInterface extends Item {
      * Used to create a new chessboard interface
      * @param modularPosition The position of the chessboard
      */
-    public ChessBoardInterface(ModularPosition modularPosition) {
+    public ChessItem(ModularPosition modularPosition) {
         super(modularPosition);
     }
 
@@ -49,7 +51,7 @@ public abstract class ChessBoardInterface extends Item {
     /**
      * Used to get the board
      */
-    public abstract Board getBoard();
+    public abstract ChessBoard getBoard();
 
     /**
      * When the mouse is hovering over a tile

@@ -26,7 +26,7 @@ public class Application {
     /**
      * The state of the application
      */
-    private static GameState state;
+    private static ApplicationState state;
 
     /**
      * Represents the window
@@ -48,7 +48,7 @@ public class Application {
 
         this.setupWindowReSizer();
 
-        Application.state = GameState.Running;
+        Application.state = ApplicationState.Running;
         Application.setPage(new MainMenu());
 
         this.start();
@@ -150,7 +150,7 @@ public class Application {
      * @return True if running
      */
     public boolean isRunning() {
-        return Application.state == GameState.Running;
+        return Application.state == ApplicationState.Running;
     }
 
     /**
@@ -194,14 +194,14 @@ public class Application {
      * Stop application when the window has been closed
      */
     public static void setClosed() {
-        Application.state = GameState.Stopped;
+        Application.state = ApplicationState.Stopped;
     }
 
     /**
      * Used to get the game state
      * @return Current game state
      */
-    public static GameState getState() {
+    public static ApplicationState getState() {
         return Application.state;
     }
 

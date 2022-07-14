@@ -1,17 +1,17 @@
-package me.smudge.client.items.chessboard.layout;
+package me.smudge.client.game.layout;
 
-import me.smudge.client.items.chessboard.Board;
-import me.smudge.client.items.chessboard.ChessColour;
+import me.smudge.client.game.ChessBoard;
+import me.smudge.client.game.ChessColour;
 import me.smudge.client.items.chessboard.pieces.*;
 import me.smudge.client.positions.TilePosition;
 
 /**
  * Represents the default chess board layout
  */
-public class DefaultBoardLayout extends BoardLayout {
+public class BoardLayoutDefault extends BoardLayout {
 
     @Override
-    public void update(Board board) {
+    public void update(ChessBoard board) {
 
         // Black pieces
         board.getTile(new TilePosition(1, 8)).setPiece(new Rook(ChessColour.BLACK));
@@ -50,5 +50,8 @@ public class DefaultBoardLayout extends BoardLayout {
         board.getTile(new TilePosition(6, 2)).setPiece(new Pawn(ChessColour.WHITE));
         board.getTile(new TilePosition(7, 2)).setPiece(new Pawn(ChessColour.WHITE));
         board.getTile(new TilePosition(8, 2)).setPiece(new Pawn(ChessColour.WHITE));
+
+        board.getTile(new TilePosition(1, 3)).setPiece(new unicorn(ChessColour.WHITE));
+        board.getTile(new TilePosition(8, 6)).setPiece(new unicorn(ChessColour.BLACK));
     }
 }

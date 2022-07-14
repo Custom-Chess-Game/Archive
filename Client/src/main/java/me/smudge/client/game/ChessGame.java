@@ -1,7 +1,8 @@
-package me.smudge.client.items.chessboard;
+package me.smudge.client.game;
 
 import me.smudge.client.controllers.Controller;
 import me.smudge.client.engine.Application;
+import me.smudge.client.items.chessboard.ChessItem;
 import me.smudge.client.positions.BoardSize;
 import me.smudge.client.positions.ModularPosition;
 
@@ -11,12 +12,12 @@ import java.util.ArrayList;
 /**
  * Represents the game instance
  */
-public class ChessBoard extends ChessBoardInterface {
+public class ChessGame extends ChessItem {
 
     /**
      * The board instance
      */
-    private final Board board;
+    private final ChessBoard board;
 
     /**
      * The players
@@ -44,19 +45,19 @@ public class ChessBoard extends ChessBoardInterface {
      * @param player2 The second player to play black
      * @param size The size of the board
      */
-    public ChessBoard(ModularPosition modularPosition, Controller player1, Controller player2, BoardSize size) {
+    public ChessGame(ModularPosition modularPosition, Controller player1, Controller player2, BoardSize size) {
         super(modularPosition);
 
         this.player1 = player1;
         this.player2 = player2;
         this.turn = ChessColour.WHITE;
 
-        this.board = new Board(size.getX(), size.getY());
-        this.board.create();
+        this.board = new ChessBoard(size.getX(), size.getY());
+        this.board.setup();
     }
 
     @Override
-    public Board getBoard() {
+    public ChessBoard getBoard() {
         return this.board;
     }
 
@@ -128,12 +129,14 @@ public class ChessBoard extends ChessBoardInterface {
      */
     private void playerHasClicked(Tile tile) {
         if (this.board.getPossibleMoves(this.clickStore).contains(tile)) {
-            tile.setPiece(this.clickStore.getPiece());
-            this.clickStore.setEmpty();
+            this.board.makeMove(
+                    new ChessMove(this.clickStore, tile, this.clickStore.getPiece())
+            );
+
             this.switchTurn();
         }
-
-        if (!(this.board.isPieceAt(tile.getTilePosition()) && tile.getPiece().getColour() != this.turn)) {
+        else if (!(this.board.isPieceAt(tile.getTilePosition()) &&
+                tile.getPiece().getColour() != this.turn)) {
             this.clickStore = tile;
         }
     }
@@ -157,10 +160,13 @@ public class ChessBoard extends ChessBoardInterface {
         Application.render();
 
         // Reset what the player has clicked
-        this.clickStore = null;
+        if (this.clickStore != null) {
+            this.resetTiles(this.clickStore);
+            this.clickStore = null;
+        }
 
         // Change whose turn it is
         this.turn = ChessColour.opposite(this.turn);
-        this.getWhoseTurn().onMyTurn(this.board);
+        if (this.getWhoseTurn().onMyTurn(this.board)) switchTurn();
     }
 }

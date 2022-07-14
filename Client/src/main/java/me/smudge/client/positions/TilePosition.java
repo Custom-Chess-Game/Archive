@@ -1,6 +1,6 @@
 package me.smudge.client.positions;
 
-import me.smudge.client.items.chessboard.ChessColour;
+import me.smudge.client.game.ChessColour;
 
 /**
  * Represents the position of the tile

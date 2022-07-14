@@ -3,7 +3,7 @@ package me.smudge.client.engine;
 /**
  * Represents the game state
  */
-public enum GameState {
+public enum ApplicationState {
 
     // Default when running
     Running,

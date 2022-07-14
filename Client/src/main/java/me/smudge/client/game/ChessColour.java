@@ -1,4 +1,4 @@
-package me.smudge.client.items.chessboard;
+package me.smudge.client.game;
 
 import java.awt.*;
 
@@ -16,6 +16,9 @@ public enum ChessColour {
         return ChessColour.BLACK;
     }
 
+    /**
+     * @return chess colour as a colour
+     */
     public Color asColour() {
         if (this.equals(ChessColour.BLACK)) return Color.GRAY;
         if (this.equals(ChessColour.WHITE)) return Color.WHITE;

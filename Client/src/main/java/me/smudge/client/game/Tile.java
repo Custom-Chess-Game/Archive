@@ -1,4 +1,4 @@
-package me.smudge.client.items.chessboard;
+package me.smudge.client.game;
 
 import me.smudge.client.items.chessboard.pieces.Piece;
 import me.smudge.client.positions.Region2D;
@@ -71,7 +71,7 @@ public class Tile {
     }
 
     /**
-     * Get the position of the {@link Tile} on the {@link Board}
+     * Get the position of the {@link Tile} on the {@link ChessBoard}
      */
     public TilePosition getTilePosition() {
         return this.tilePosition;

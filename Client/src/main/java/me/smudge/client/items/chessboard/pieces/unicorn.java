@@ -7,49 +7,52 @@ import me.smudge.client.positions.TilePosition;
 
 import java.util.ArrayList;
 
-public class Queen extends Piece {
+public class unicorn extends Piece {
 
     /**
      * Create a new instance of {@link Piece}
-     * Create a new instance of {@link Queen}
+     * Create a new instance of {@link unicorn}
+     *
      * @param colour Colour of the chess piece
      */
-    public Queen(ChessColour colour) {
+    public unicorn(ChessColour colour) {
         super(colour);
     }
 
     @Override
     public String getPathWhite() {
-        return "src/main/resources/pieces/white_queen.png";
+        return "src/main/resources/pieces/white_rook.png";
     }
 
     @Override
     public String getPathBlack() {
-        return "src/main/resources/pieces/black_queen.png";
+        return "src/main/resources/pieces/black_rook.png";
     }
 
     @Override
     public boolean canJump() {
-        return false;
+        return true;
     }
 
     @Override
     public int getValue() {
-        return 9;
+        return 4;
     }
 
     @Override
     public ArrayList<Tile> getValidPositions(ChessBoard board, Tile tile) {
         ArrayList<Tile> tiles = new ArrayList<>();
-        TilePosition position = tile.getTilePosition();
 
-        Tile bishop = new Tile(tile.tileColour, new TilePosition(position.getX(), position.getY()));
-        bishop.setPiece(new Bishop(this.getColour()));
-        tiles.addAll(bishop.getPiece().getValidPositions(board, bishop));
+        for (Tile temp : board.getAllTiles()) {
+            TilePosition vector = new TilePosition(
+                    tile.getTilePosition().getX() - temp.getTilePosition().getX(),
+                    tile.getTilePosition().getY() - temp.getTilePosition().getY()
+            );
 
-        Tile rook = new Tile(tile.tileColour, new TilePosition(position.getX(), position.getY()));
-        rook.setPiece(new Rook(this.getColour()));
-        tiles.addAll(rook.getPiece().getValidPositions(board, bishop));
+            if (Math.abs(vector.getX()) > 3) continue;
+            if (Math.abs(vector.getY()) > 3) continue;
+            tiles.add(temp);
+        }
 
         return tiles;
     }

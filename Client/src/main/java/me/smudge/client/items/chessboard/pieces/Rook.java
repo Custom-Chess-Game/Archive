@@ -1,8 +1,8 @@
 package me.smudge.client.items.chessboard.pieces;
 
-import me.smudge.client.items.chessboard.Board;
-import me.smudge.client.items.chessboard.ChessColour;
-import me.smudge.client.items.chessboard.Tile;
+import me.smudge.client.game.ChessBoard;
+import me.smudge.client.game.ChessColour;
+import me.smudge.client.game.Tile;
 import me.smudge.client.positions.TilePosition;
 
 import java.util.ArrayList;
@@ -34,7 +34,12 @@ public class Rook extends Piece {
     }
 
     @Override
-    public ArrayList<Tile> getValidPositions(Board board, Tile tile) {
+    public int getValue() {
+        return 5;
+    }
+
+    @Override
+    public ArrayList<Tile> getValidPositions(ChessBoard board, Tile tile) {
         ArrayList<Tile> tiles = new ArrayList<>();
         TilePosition position = tile.getTilePosition();
 
@@ -49,7 +54,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public ArrayList<Tile> getTakePositions(Board board, Tile tile) {
+    public ArrayList<Tile> getTakePositions(ChessBoard board, Tile tile) {
         return this.getValidPositions(board, tile);
     }
 }

@@ -1,7 +1,7 @@
 package me.smudge.client.controllers;
 
-import me.smudge.client.items.chessboard.Board;
-import me.smudge.client.items.chessboard.ChessColour;
+import me.smudge.client.game.ChessBoard;
+import me.smudge.client.game.ChessColour;
 
 /**
  * Represents a real player
@@ -16,5 +16,7 @@ public class Player extends Controller {
         return true;
     }
 
-    @Override public void onMyTurn(Board board) {}
+    @Override public boolean onMyTurn(ChessBoard board) {
+        return false;
+    }
 }
