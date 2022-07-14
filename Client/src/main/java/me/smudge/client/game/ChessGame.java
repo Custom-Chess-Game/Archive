@@ -3,6 +3,7 @@ package me.smudge.client.game;
 import me.smudge.client.controllers.Controller;
 import me.smudge.client.engine.Application;
 import me.smudge.client.items.chessboard.ChessItem;
+import me.smudge.client.pages.MainMenu;
 import me.smudge.client.positions.BoardSize;
 import me.smudge.client.positions.ModularPosition;
 
@@ -111,7 +112,7 @@ public class ChessGame extends ChessItem {
         if (tiles != null) {
             for (Tile temp : tiles) {
                 if (temp == null) continue;
-                if (tile.getPiece().canJump()) temp.setTileColour(Color.yellow);
+                if (tile.getPiece().getOptions().canJump) temp.setTileColour(Color.yellow);
                 else temp.setTileColour(Color.green);
             }
         }
@@ -153,6 +154,11 @@ public class ChessGame extends ChessItem {
      * Used to switch to the next players turn
      */
     private void switchTurn() {
+        if (this.checkIfGameHasEnded()) {
+            Application.setPage(new MainMenu());
+            return;
+        }
+
         // Flip the board
         this.board.flip();
 
@@ -168,5 +174,9 @@ public class ChessGame extends ChessItem {
         // Change whose turn it is
         this.turn = ChessColour.opposite(this.turn);
         if (this.getWhoseTurn().onMyTurn(this.board)) switchTurn();
+    }
+
+    private boolean checkIfGameHasEnded() {
+        return this.board.includesCanEndGame(this.board.getPossibleMoveForColour(ChessColour.opposite(this.turn)));
     }
 }

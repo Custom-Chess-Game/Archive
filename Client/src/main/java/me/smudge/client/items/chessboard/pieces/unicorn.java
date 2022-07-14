@@ -17,6 +17,8 @@ public class unicorn extends Piece {
      */
     public unicorn(ChessColour colour) {
         super(colour);
+
+        this.getOptions().canJump = true;
     }
 
     @Override
@@ -27,11 +29,6 @@ public class unicorn extends Piece {
     @Override
     public String getPathBlack() {
         return "src/main/resources/pieces/black_rook.png";
-    }
-
-    @Override
-    public boolean canJump() {
-        return true;
     }
 
     @Override

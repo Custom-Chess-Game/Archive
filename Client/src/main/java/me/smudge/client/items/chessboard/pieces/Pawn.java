@@ -29,11 +29,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canJump() {
-        return false;
-    }
-
-    @Override
     public int getValue() {
         return 1;
     }

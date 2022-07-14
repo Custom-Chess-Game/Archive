@@ -16,6 +16,8 @@ public class Knight extends Piece {
      */
     public Knight(ChessColour colour) {
         super(colour);
+
+        this.getOptions().canJump = true;
     }
 
     @Override
@@ -26,11 +28,6 @@ public class Knight extends Piece {
     @Override
     public String getPathBlack() {
         return "src/main/resources/pieces/black_knight.png";
-    }
-
-    @Override
-    public boolean canJump() {
-        return true;
     }
 
     @Override

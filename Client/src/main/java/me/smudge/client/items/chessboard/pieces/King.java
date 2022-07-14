@@ -16,6 +16,8 @@ public class King extends Piece {
      */
     public King(ChessColour colour) {
         super(colour);
+
+        this.getOptions().endsGame = true;
     }
 
     @Override
@@ -26,11 +28,6 @@ public class King extends Piece {
     @Override
     public String getPathBlack() {
         return "src/main/resources/pieces/black_king.png";
-    }
-
-    @Override
-    public boolean canJump() {
-        return false;
     }
 
     @Override

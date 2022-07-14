@@ -18,11 +18,17 @@ public abstract class Piece {
     private ChessColour colour;
 
     /**
+     * The options tied to the piece
+     */
+    private PieceOptions options;
+
+    /**
      * Create a new instance of {@link Piece}
      * @param colour Colour of the chess piece
      */
     public Piece(ChessColour colour) {
         this.colour = colour;
+        this.options = new PieceOptions();
     }
 
     /**
@@ -32,16 +38,19 @@ public abstract class Piece {
     public abstract String getPathBlack();
 
     /**
-     * Get if the piece can jump over other pieces
-     */
-    public abstract boolean canJump();
-
-    /**
      * Used to get the value of the piece that an algorithm can use
      * to determine what is the best move to make
      * @return Value of the piece as an integer
      */
     public abstract int getValue();
+
+    /**
+     * Used to get the pieces options
+     * @return Piece options
+     */
+    public PieceOptions getOptions() {
+        return options;
+    }
 
     /**
      * Get piece colour

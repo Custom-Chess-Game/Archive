@@ -2,6 +2,7 @@ package me.smudge.client.game;
 
 import me.smudge.client.engine.Application;
 import me.smudge.client.game.layout.BoardLayout;
+import me.smudge.client.items.chessboard.pieces.King;
 import me.smudge.client.positions.Position;
 import me.smudge.client.positions.Region2D;
 import me.smudge.client.positions.TilePosition;
@@ -200,7 +201,7 @@ public class ChessBoard {
 
             // Is there a piece blocking the square
             if (this.getPiecesBetween(tile, temp) > 0) {
-                if (!tile.getPiece().canJump()) continue;
+                if (!tile.getPiece().getOptions().canJump) continue;
             }
             tiles.add(temp);
         }
@@ -214,7 +215,7 @@ public class ChessBoard {
             if (temp.getPiece().getColour() == tile.getPiece().getColour()) continue;
 
             // If the piece can jump
-            if (tile.getPiece().canJump()) {
+            if (tile.getPiece().getOptions().canJump) {
                 tiles.add(temp);
                 continue;
             }
@@ -312,6 +313,19 @@ public class ChessBoard {
         return tile.getPiece() != null;
     }
 
+    /**
+     * Used to see if a controller is able to end the game
+     * @param moves List of tiles to check
+     * @return If there is a tile that has end game set to true
+     */
+    public boolean includesCanEndGame(ArrayList<ChessMove> moves) {
+        for (ChessMove move : moves) {
+            if (this.getTile(move.getTo()).getPiece() == null) continue;
+            if (this.getTile(move.getTo()).getPiece().getOptions().endsGame) return true;
+        }
+        return false;
+    }
+
     /* ---------- Rendering ---------- */
 
     /**
@@ -374,5 +388,20 @@ public class ChessBoard {
         }
 
         return listOfTiles;
+    }
+
+    public void asString() {
+        for (int y = 1; y < this.amountOfTilesX + 1; y++) {
+            for (int x = 1; x < this.amountOfTilesY + 1; x++) {
+                Tile tile = this.getTile(new TilePosition(x, y));
+                if (this.isPieceAt(tile.getTilePosition())) {
+                    System.out.print(this.getTile(new TilePosition(x, y)).getPiece().getClass().getSimpleName().split("")[0]);
+                }
+                else {
+                    System.out.print("x");
+                }
+            }
+            System.out.println();
+        }
     }
 }

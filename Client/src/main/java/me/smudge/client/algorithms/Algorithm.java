@@ -3,12 +3,16 @@ package me.smudge.client.algorithms;
 import me.smudge.client.game.ChessBoard;
 import me.smudge.client.game.ChessColour;
 import me.smudge.client.game.ChessMove;
+import me.smudge.client.game.Tile;
+import me.smudge.client.items.chessboard.pieces.unicorn;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Algorithm {
+
+    public int i = 0;
 
     public abstract int score(ChessBoard board, ChessColour colour);
 
@@ -27,12 +31,16 @@ public abstract class Algorithm {
 
         System.out.println("--- Algorithm ---");
         System.out.println("Scored Move : " + Collections.max(moves.entrySet(), Map.Entry.comparingByKey()).getKey());
+        System.out.println("Trees Created : " + i);
 
         return Collections.max(moves.entrySet(), Map.Entry.comparingByKey()).getValue();
     }
 
     private int calculate(int depth, ChessBoard board, ChessColour turn, ChessColour scoring, int alfa, int beta) {
-        if (depth == 0) return this.score(board, scoring);
+        if (depth == 0) {
+            i++;
+            return this.score(board, scoring);
+        }
 
         int max = -1000;
 
@@ -49,6 +57,15 @@ public abstract class Algorithm {
         }
 
         return max;
+    }
+
+    private boolean test(ChessBoard board) {
+        for (Tile tile : board.getAllPieces()) {
+            if (tile.getPiece() instanceof unicorn && tile.getPiece().getColour() == ChessColour.BLACK) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
