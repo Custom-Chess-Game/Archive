@@ -1,6 +1,7 @@
 package me.smudge.client.game;
 
-import me.smudge.client.items.chessboard.pieces.Piece;
+import me.smudge.client.Chess;
+import me.smudge.client.game.pieces.Piece;
 import me.smudge.client.positions.Region2D;
 import me.smudge.client.positions.TilePosition;
 
@@ -11,7 +12,7 @@ import java.awt.*;
 /**
  * Represents a chess tile and the piece on the tile
  */
-public class Tile {
+public class ChessBoardTile {
 
     /**
      * The colour of the tile
@@ -43,9 +44,19 @@ public class Tile {
      * @param tileColour The colour of the tile
      * @param position The position of the tile on the board
      */
-    public Tile(ChessColour tileColour, TilePosition position) {
+    public ChessBoardTile(ChessColour tileColour, TilePosition position) {
         this.tileColour = tileColour;
         this.tilePosition = position;
+    }
+
+    /**
+     * Used to clone a tile
+     * @param tile Tile to clone
+     */
+    public ChessBoardTile(ChessBoardTile tile) {
+        this.tileColour = tile.tileColour;
+        this.tilePosition = tile.tilePosition;
+        this.piece = tile.piece;
     }
 
     /**
@@ -71,7 +82,7 @@ public class Tile {
     }
 
     /**
-     * Get the position of the {@link Tile} on the {@link ChessBoard}
+     * Get the position of the {@link ChessBoardTile} on the {@link ChessBoard}
      */
     public TilePosition getTilePosition() {
         return this.tilePosition;

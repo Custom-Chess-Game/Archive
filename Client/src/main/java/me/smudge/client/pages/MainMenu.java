@@ -1,6 +1,8 @@
 package me.smudge.client.pages;
 
 import me.smudge.client.engine.Application;
+import me.smudge.client.game.ChessColour;
+import me.smudge.client.game.ChessMoveLog;
 import me.smudge.client.items.ItemCollection;
 import me.smudge.client.items.button.Button;
 import me.smudge.client.items.button.ButtonExecute;
@@ -38,6 +40,12 @@ public class MainMenu extends Page {
         this.itemCollection.addItem(new Button(
                 new ModularPosition(400, 100).setCentered(true),
                 new ButtonText("Statistics")
+        ));
+
+        this.itemCollection.addItem(new Button(
+                new ModularPosition(400, 100).setCentered(true),
+                new ButtonText("Test"),
+                new ButtonExecute(() -> Application.setPage(new GameEnd(ChessColour.WHITE, new ChessMoveLog())))
         ));
 
         this.itemCollection.toPage(this);

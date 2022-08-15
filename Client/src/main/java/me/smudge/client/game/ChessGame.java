@@ -2,8 +2,9 @@ package me.smudge.client.game;
 
 import me.smudge.client.controllers.Controller;
 import me.smudge.client.engine.Application;
-import me.smudge.client.items.chessboard.ChessItem;
-import me.smudge.client.pages.MainMenu;
+import me.smudge.client.game.layout.BoardLayout;
+import me.smudge.client.items.chessboard.ChessBoardItem;
+import me.smudge.client.pages.GameEnd;
 import me.smudge.client.positions.BoardSize;
 import me.smudge.client.positions.ModularPosition;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Represents the game instance
  */
-public class ChessGame extends ChessItem {
+public class ChessGame extends ChessBoardItem {
 
     /**
      * The board instance
@@ -35,9 +36,11 @@ public class ChessGame extends ChessItem {
      * Stores for the previous tile
      * Used to disable and reset tiles that are no longer hovered or clicked
      */
-    private Tile clickStore;
-    private Tile hoverStore;
-    private Tile clickHoverStore;
+    private ChessBoardTile clickStore;
+    private ChessBoardTile hoverStore;
+    private ChessBoardTile clickHoverStore;
+
+    private boolean newTurn = true;
 
     /**
      * Used to create a new instance of the chessboard
@@ -46,7 +49,7 @@ public class ChessGame extends ChessItem {
      * @param player2 The second player to play black
      * @param size The size of the board
      */
-    public ChessGame(ModularPosition modularPosition, Controller player1, Controller player2, BoardSize size) {
+    public ChessGame(ModularPosition modularPosition, Controller player1, Controller player2, BoardSize size, BoardLayout layout) {
         super(modularPosition);
 
         this.player1 = player1;
@@ -55,6 +58,15 @@ public class ChessGame extends ChessItem {
 
         this.board = new ChessBoard(size.getX(), size.getY());
         this.board.setup();
+        this.board.setLayout(layout);
+    }
+
+    @Override
+    public void tick() {
+        if (this.newTurn) {
+            this.newTurn = false;
+            if (this.getWhoseTurn().onMyTurn(this.board)) switchTurn();
+        }
     }
 
     @Override
@@ -63,7 +75,7 @@ public class ChessGame extends ChessItem {
     }
 
     @Override
-    public void onTileHover(Tile tile) {
+    public void onTileHover(ChessBoardTile tile) {
 
         // If a piece is selected
         if (this.clickStore != null && this.clickStore.getPiece() != null) {
@@ -94,10 +106,10 @@ public class ChessGame extends ChessItem {
      * Used to reset the tiles to its original colour
      * @param tile The pieces possible moves to reset
      */
-    public void resetTiles(Tile tile) {
-        ArrayList<Tile> tiles = this.board.getPossibleMoves(tile);
+    public void resetTiles(ChessBoardTile tile) {
+        ArrayList<ChessBoardTile> tiles = this.board.getPossibleMoves(tile);
         if (tiles == null) return;
-        for (Tile temp : tiles) {
+        for (ChessBoardTile temp : tiles) {
             if (temp == null) continue;
             temp.setTileColour(temp.tileColour.asColour());
         }
@@ -107,10 +119,10 @@ public class ChessGame extends ChessItem {
      * Used to colour the tiles based on if the piece can jump
      * @param tile The pieces possible moves to colour
      */
-    private void colourTiles(Tile tile) {
-        ArrayList<Tile> tiles = this.board.getPossibleMoves(tile);
+    private void colourTiles(ChessBoardTile tile) {
+        ArrayList<ChessBoardTile> tiles = this.board.getPossibleMoves(tile);
         if (tiles != null) {
-            for (Tile temp : tiles) {
+            for (ChessBoardTile temp : tiles) {
                 if (temp == null) continue;
                 if (tile.getPiece().getOptions().canJump) temp.setTileColour(Color.yellow);
                 else temp.setTileColour(Color.green);
@@ -119,7 +131,7 @@ public class ChessGame extends ChessItem {
     }
 
     @Override
-    public void onClick(Tile tile) {
+    public void onClick(ChessBoardTile tile) {
         Controller controller = this.getWhoseTurn();
         if (controller.canClick()) this.playerHasClicked(tile);
     }
@@ -128,7 +140,7 @@ public class ChessGame extends ChessItem {
      * Called when a player has clicked a tile
      * @param tile Tile that has been clicked
      */
-    private void playerHasClicked(Tile tile) {
+    private void playerHasClicked(ChessBoardTile tile) {
         if (this.board.getPossibleMoves(this.clickStore).contains(tile)) {
             this.board.makeMove(
                     new ChessMove(this.clickStore, tile, this.clickStore.getPiece())
@@ -143,7 +155,7 @@ public class ChessGame extends ChessItem {
     }
 
     /**
-     * Used to get the player who's turn it is
+     * Used to get the player whose turn it is
      */
     private Controller getWhoseTurn() {
         if (this.turn == this.player1.getColour()) return this.player1;
@@ -155,7 +167,7 @@ public class ChessGame extends ChessItem {
      */
     private void switchTurn() {
         if (this.checkIfGameHasEnded()) {
-            Application.setPage(new MainMenu());
+            Application.setPage(new GameEnd(ChessColour.opposite(this.turn), this.board.getLog()));
             return;
         }
 
@@ -173,8 +185,12 @@ public class ChessGame extends ChessItem {
 
         // Change whose turn it is
         this.turn = ChessColour.opposite(this.turn);
-        if (this.getWhoseTurn().onMyTurn(this.board)) switchTurn();
+
+        // New turn
+        this.newTurn = true;
     }
+
+
 
     private boolean checkIfGameHasEnded() {
         return this.board.includesCanEndGame(this.board.getPossibleMoveForColour(ChessColour.opposite(this.turn)));

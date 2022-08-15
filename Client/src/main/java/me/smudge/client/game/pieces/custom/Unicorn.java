@@ -1,21 +1,22 @@
-package me.smudge.client.items.chessboard.pieces;
+package me.smudge.client.game.pieces.custom;
 
 import me.smudge.client.game.ChessBoard;
+import me.smudge.client.game.ChessBoardTile;
 import me.smudge.client.game.ChessColour;
-import me.smudge.client.game.Tile;
+import me.smudge.client.game.pieces.Piece;
 import me.smudge.client.positions.TilePosition;
 
 import java.util.ArrayList;
 
-public class unicorn extends Piece {
+public class Unicorn extends Piece {
 
     /**
      * Create a new instance of {@link Piece}
-     * Create a new instance of {@link unicorn}
+     * Create a new instance of {@link Unicorn}
      *
      * @param colour Colour of the chess piece
      */
-    public unicorn(ChessColour colour) {
+    public Unicorn(ChessColour colour) {
         super(colour);
 
         this.getOptions().canJump = true;
@@ -37,10 +38,10 @@ public class unicorn extends Piece {
     }
 
     @Override
-    public ArrayList<Tile> getValidPositions(ChessBoard board, Tile tile) {
-        ArrayList<Tile> tiles = new ArrayList<>();
+    public ArrayList<ChessBoardTile> getValidPositions(ChessBoard board, ChessBoardTile tile) {
+        ArrayList<ChessBoardTile> tiles = new ArrayList<>();
 
-        for (Tile temp : board.getAllTiles()) {
+        for (ChessBoardTile temp : board.getAllTiles()) {
             TilePosition vector = new TilePosition(
                     tile.getTilePosition().getX() - temp.getTilePosition().getX(),
                     tile.getTilePosition().getY() - temp.getTilePosition().getY()
@@ -55,7 +56,7 @@ public class unicorn extends Piece {
     }
 
     @Override
-    public ArrayList<Tile> getTakePositions(ChessBoard board, Tile tile) {
+    public ArrayList<ChessBoardTile> getTakePositions(ChessBoard board, ChessBoardTile tile) {
         return this.getValidPositions(board, tile);
     }
 }

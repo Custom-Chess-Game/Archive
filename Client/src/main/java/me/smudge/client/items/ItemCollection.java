@@ -49,40 +49,45 @@ public class ItemCollection {
     public void calculate() {
         // Amount of items per column
         int amountPerColumn = this.getModularItems().size() / this.columns;
+        if (this.columns > 1) amountPerColumn = (this.getModularItems().size() / this.columns) + 1;
 
         for (Item item : this.items) {
             if (item.getModularPosition() == null) continue;
 
-            // The true index of the item
+            // The index of the item after filtering static items
             int index = this.getModularItems().indexOf(item) + 1;
 
+            // Width and height to set the items
             int columnWidth = this.getWidest(this.getModularItems()).getModularPosition().getWidth();
             int rowHeight = this.getHighest(this.getModularItems()).getModularPosition().getHeight();
 
+            // Dividing the screen depending on the amount of columns and rows
             int columnMultiplier = (Chess.getConfig().getScreenSize().get(0) + this.padding) / (this.columns + 1);
             int rowMultiplier = (Chess.getConfig().getScreenSize().get(1) + this.padding) / (amountPerColumn + 1);
 
+            // Difference from default screen size
             double sizeMultiplierX = Chess.getConfig().getScreenSize().get(0) / (double)1000;
             double sizeMultiplierY = Chess.getConfig().getScreenSize().get(1) / (double)600;
 
-            if (columnMultiplier < columnWidth) {
-                columnMultiplier = columnWidth;
-            }
+            // If the size is smaller, set it so there is no padding
+            if (columnMultiplier < columnWidth) columnMultiplier = columnWidth;
+            if (rowMultiplier < rowHeight) rowMultiplier = rowHeight;
 
-            if (rowMultiplier < rowHeight) {
-                rowMultiplier = rowHeight;
-            }
-
+            // The new size of the item
             double sizeX = item.getModularPosition().getFirstWidth() * sizeMultiplierX;
             double sizeY = item.getModularPosition().getFirstHeight() * sizeMultiplierY;
 
+            // What column the item is in
             int currentColumn = Math.round(index / (float)amountPerColumn);
-            if (currentColumn >= 0) currentColumn = 1;
+            if (currentColumn == 0) currentColumn = 1;
+
+            // What row the item is on
+            int currentRow = index - ((currentColumn - 1) * amountPerColumn);
 
             int x = columnMultiplier * currentColumn;
             x -= item.getModularPosition().getWidth() / 2;
 
-            int y = rowMultiplier * index;
+            int y = rowMultiplier * currentRow;
             y -= item.getModularPosition().getHeight() / 2;
 
             if (item.getModularPosition().isStatic()) {

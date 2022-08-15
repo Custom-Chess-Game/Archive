@@ -29,7 +29,7 @@ public abstract class Controller {
     /**
      * Called when it's the turn of the controllers
      * @param board The instance of the chess board
-     * @return
+     * @return If the turn has ended
      */
     public abstract boolean onMyTurn(ChessBoard board);
 

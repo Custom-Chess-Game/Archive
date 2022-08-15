@@ -2,7 +2,6 @@ package me.smudge.client.game;
 
 import me.smudge.client.engine.Application;
 import me.smudge.client.game.layout.BoardLayout;
-import me.smudge.client.items.chessboard.pieces.King;
 import me.smudge.client.positions.Position;
 import me.smudge.client.positions.Region2D;
 import me.smudge.client.positions.TilePosition;
@@ -48,7 +47,7 @@ public class ChessBoard {
      * However, the order of the tiles does not matter when rendering
      * as it's based on the tile position.
      */
-    private ArrayList<Tile> tiles = new ArrayList<>();
+    private ArrayList<ChessBoardTile> tiles = new ArrayList<>();
 
     /**
      * Create a new instance of {@link ChessBoard}
@@ -70,11 +69,8 @@ public class ChessBoard {
         this.amountOfTilesX = board.amountOfTilesX;
         this.amountOfTilesY = board.amountOfTilesY;
 
-        this.log = new ChessMoveLog(board.log);
-
-        this.setup();
-        for (Tile tile : board.getAllPieces()) {
-            this.getTile(tile.getTilePosition()).setPiece(tile.getPiece());
+        for (ChessBoardTile tile : board.getAllTiles()) {
+            this.tiles.add(new ChessBoardTile(tile));
         }
     }
 
@@ -90,7 +86,7 @@ public class ChessBoard {
 
                 if (x != 1) tileColour = ChessColour.opposite(tileColour);
 
-                this.addTile(new Tile(tileColour, new TilePosition(x, y)));
+                this.addTile(new ChessBoardTile(tileColour, new TilePosition(x, y)));
             }
         }
     }
@@ -101,8 +97,8 @@ public class ChessBoard {
      * @param tilePosition Tile position
      * @return Tile at the position
      */
-    public Tile getTile(TilePosition tilePosition) {
-        for (Tile tile : this.tiles) {
+    public ChessBoardTile getTile(TilePosition tilePosition) {
+        for (ChessBoardTile tile : this.tiles) {
             if (tile.getTilePosition().contains(tilePosition)) return tile;
         }
         return null;
@@ -113,8 +109,8 @@ public class ChessBoard {
      * @param mouseLocation Mouse position
      * @return Instance of the tile
      */
-    public Tile getTileAt(Position mouseLocation) {
-        for (Tile tile : this.tiles) {
+    public ChessBoardTile getTileAt(Position mouseLocation) {
+        for (ChessBoardTile tile : this.tiles) {
             if (tile.getRegion().contains(mouseLocation)) return tile;
         }
         return null;
@@ -123,16 +119,16 @@ public class ChessBoard {
     /**
      * @return All tiles on the board
      */
-    public ArrayList<Tile> getAllTiles() {
+    public ArrayList<ChessBoardTile> getAllTiles() {
         return this.tiles;
     }
 
     /**
      * @return All tiles with a piece on
      */
-    public ArrayList<Tile> getAllPieces() {
-        ArrayList<Tile> tiles = new ArrayList<>();
-        for (Tile tile : this.tiles) {
+    public ArrayList<ChessBoardTile> getAllPieces() {
+        ArrayList<ChessBoardTile> tiles = new ArrayList<>();
+        for (ChessBoardTile tile : this.tiles) {
             if (tile == null || tile.getPiece() == null) continue;
             tiles.add(tile);
         }
@@ -144,9 +140,9 @@ public class ChessBoard {
      * @param colour Colour of the pieces
      * @return List of tiles with these pieces on
      */
-    public ArrayList<Tile> getAllPieces(ChessColour colour) {
-        ArrayList<Tile> tiles = new ArrayList<>();
-        for (Tile tile : this.tiles) {
+    public ArrayList<ChessBoardTile> getAllPieces(ChessColour colour) {
+        ArrayList<ChessBoardTile> tiles = new ArrayList<>();
+        for (ChessBoardTile tile : this.tiles) {
             if (tile == null || tile.getPiece() == null) continue;
             if (tile.getPiece().getColour() != colour) continue;
             tiles.add(tile);
@@ -161,7 +157,7 @@ public class ChessBoard {
      * @param tile2 The second tile
      * @return Amount of pieces between the tiles
      */
-    public int getPiecesBetween(Tile tile1, Tile tile2) {
+    public int getPiecesBetween(ChessBoardTile tile1, ChessBoardTile tile2) {
         TilePosition vector = new TilePosition(
                 tile2.getTilePosition().getX() - tile1.getTilePosition().getX(),
                 tile2.getTilePosition().getY() - tile1.getTilePosition().getY()
@@ -188,14 +184,14 @@ public class ChessBoard {
      * @param tile The tile on the board to check
      * @return List of tiles it can move to
      */
-    public ArrayList<Tile> getPossibleMoves(Tile tile) {
+    public ArrayList<ChessBoardTile> getPossibleMoves(ChessBoardTile tile) {
         if (tile == null) return new ArrayList<>();
         if (tile.getPiece() == null) return new ArrayList<>();
 
-        ArrayList<Tile> tiles = new ArrayList<>();
+        ArrayList<ChessBoardTile> tiles = new ArrayList<>();
 
         // Add tiles that have no pieces on
-        for (Tile temp : tile.getPiece().getValidPositions(this, tile)) {
+        for (ChessBoardTile temp : tile.getPiece().getValidPositions(this, tile)) {
             if (temp == null) continue;
             if (temp.getPiece() != null) continue;
 
@@ -207,7 +203,7 @@ public class ChessBoard {
         }
 
         // Add tiles that the piece can take
-        for (Tile temp : tile.getPiece().getTakePositions(this, tile)) {
+        for (ChessBoardTile temp : tile.getPiece().getTakePositions(this, tile)) {
             if (temp == null) continue;
             if (temp.getPiece() == null) continue;
 
@@ -232,8 +228,8 @@ public class ChessBoard {
     public ArrayList<ChessMove> getPossibleMoveForColour(ChessColour colour) {
         ArrayList<ChessMove> moves = new ArrayList<>();
 
-        for (Tile from : this.getAllPieces(colour)) {
-            for (Tile to : this.getPossibleMoves(from)) {
+        for (ChessBoardTile from : this.getAllPieces(colour)) {
+            for (ChessBoardTile to : this.getPossibleMoves(from)) {
                 moves.add(new ChessMove(from, to, from.getPiece()));
             }
         }
@@ -246,7 +242,7 @@ public class ChessBoard {
      * To change a tile you must get the instance.
      * @param tile Tile instance
      */
-    public void addTile(Tile tile) {
+    public void addTile(ChessBoardTile tile) {
         this.tiles.add(tile);
     }
 
@@ -273,6 +269,13 @@ public class ChessBoard {
     }
 
     /**
+     * Used to get the current move log
+     */
+    public ChessMoveLog getLog() {
+        return this.log;
+    }
+
+    /**
      * Used to update the board layout
      * @param boardLayout The layout
      */
@@ -293,6 +296,15 @@ public class ChessBoard {
     }
 
     /**
+     * Used to make a move without logging
+     * @param move The chess move made
+     */
+    public void makeSilentMove(ChessMove move) {
+        this.getTile(move.getFrom()).setEmpty();
+        this.getTile(move.getTo()).setPiece(move.getPiece());
+    }
+
+    /**
      * Used to flip the chess board
      */
     public void flip() {
@@ -308,7 +320,7 @@ public class ChessBoard {
      * @return True if there is a piece on the tile
      */
     public boolean isPieceAt(TilePosition position) {
-        Tile tile = this.getTile(position);
+        ChessBoardTile tile = this.getTile(position);
         if (tile == null) return false;
         return tile.getPiece() != null;
     }
@@ -356,9 +368,9 @@ public class ChessBoard {
      */
     private HashMap<Integer, JButton> getSortedListOfTiles() {
         HashMap<Integer, JButton> listOfTiles = new HashMap<>();
-        ArrayList<Tile> tiles = new ArrayList<>(this.tiles);
+        ArrayList<ChessBoardTile> tiles = new ArrayList<>(this.tiles);
 
-        for (Tile tile : tiles) {
+        for (ChessBoardTile tile : tiles) {
             JButton tilePanel = new JButton();
             tile.render(tilePanel);
             tilePanel.setVisible(true);
@@ -393,7 +405,7 @@ public class ChessBoard {
     public void asString() {
         for (int y = 1; y < this.amountOfTilesX + 1; y++) {
             for (int x = 1; x < this.amountOfTilesY + 1; x++) {
-                Tile tile = this.getTile(new TilePosition(x, y));
+                ChessBoardTile tile = this.getTile(new TilePosition(x, y));
                 if (this.isPieceAt(tile.getTilePosition())) {
                     System.out.print(this.getTile(new TilePosition(x, y)).getPiece().getClass().getSimpleName().split("")[0]);
                 }

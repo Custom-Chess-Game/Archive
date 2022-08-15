@@ -14,10 +14,13 @@ public class Chess {
      */
     private static Config config;
 
+    /**
+     * Used to create a new instance of the chess application
+     */
     public Chess() {
 
         // Set up the config
-        config = new Config();
+        Chess.config = new Config();
 
         new Application("Chess");
     }
@@ -27,6 +30,6 @@ public class Chess {
      * @return Config instance
      */
     public static Config getConfig() {
-        return config;
+        return Chess.config;
     }
 }

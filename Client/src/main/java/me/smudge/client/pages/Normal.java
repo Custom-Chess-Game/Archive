@@ -3,10 +3,10 @@ package me.smudge.client.pages;
 import me.smudge.client.algorithms.AlgorithmBasic;
 import me.smudge.client.controllers.Bot;
 import me.smudge.client.controllers.Player;
-import me.smudge.client.items.ItemCollection;
-import me.smudge.client.game.ChessGame;
 import me.smudge.client.game.ChessColour;
+import me.smudge.client.game.ChessGame;
 import me.smudge.client.game.layout.BoardLayoutDefault;
+import me.smudge.client.items.ItemCollection;
 import me.smudge.client.positions.BoardSize;
 import me.smudge.client.positions.ModularPosition;
 import me.smudge.client.positions.Position;
@@ -33,10 +33,9 @@ public class Normal extends Page {
                 new Player(ChessColour.WHITE),
                 new Bot(ChessColour.BLACK, new AlgorithmBasic()),
 
-                new BoardSize(8, 8)
+                new BoardSize(8, 8),
+                new BoardLayoutDefault()
         );
-
-        chessBoard.getBoard().setLayout(new BoardLayoutDefault());
 
         this.itemCollection.addItem(chessBoard);
 

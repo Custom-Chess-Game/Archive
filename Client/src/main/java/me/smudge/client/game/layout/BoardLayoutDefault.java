@@ -2,7 +2,7 @@ package me.smudge.client.game.layout;
 
 import me.smudge.client.game.ChessBoard;
 import me.smudge.client.game.ChessColour;
-import me.smudge.client.items.chessboard.pieces.*;
+import me.smudge.client.game.pieces.standered.*;
 import me.smudge.client.positions.TilePosition;
 
 /**
@@ -50,8 +50,5 @@ public class BoardLayoutDefault extends BoardLayout {
         board.getTile(new TilePosition(6, 2)).setPiece(new Pawn(ChessColour.WHITE));
         board.getTile(new TilePosition(7, 2)).setPiece(new Pawn(ChessColour.WHITE));
         board.getTile(new TilePosition(8, 2)).setPiece(new Pawn(ChessColour.WHITE));
-
-        board.getTile(new TilePosition(1, 3)).setPiece(new unicorn(ChessColour.WHITE));
-        board.getTile(new TilePosition(8, 6)).setPiece(new unicorn(ChessColour.BLACK));
     }
 }

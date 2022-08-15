@@ -1,10 +1,12 @@
-package me.smudge.client.items.chessboard.pieces;
+package me.smudge.client.game.pieces;
 
+import me.smudge.client.Chess;
 import me.smudge.client.game.ChessBoard;
+import me.smudge.client.game.ChessBoardTile;
 import me.smudge.client.game.ChessColour;
-import me.smudge.client.game.Tile;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -67,8 +69,15 @@ public abstract class Piece {
         String path = getPathBlack();
         if (this.colour == ChessColour.WHITE) path = getPathWhite();
 
-        Icon icon = new ImageIcon(path);
-        panel.setIcon(icon);
+        // How to screen relates to its default size
+        float multiplierX = (float) (Chess.getConfig().getScreenSize().get(0) / (double)1000);
+        float multiplierY = (float) (Chess.getConfig().getScreenSize().get(1) / (double)600);
+        float multiplier = Math.min(multiplierX, multiplierY);
+
+        ImageIcon icon = new ImageIcon(path);
+        ImageIcon scaled = new ImageIcon(icon.getImage().getScaledInstance((int) (60 * multiplier), (int) (60 * multiplier), Image.SCALE_SMOOTH));
+
+        panel.setIcon(scaled);
         panel.setVisible(true);
     }
 
@@ -76,11 +85,11 @@ public abstract class Piece {
      * Used to get valid positions on the board
      * @return Valid tiles
      */
-    public abstract ArrayList<Tile> getValidPositions(ChessBoard board, Tile tile);
+    public abstract ArrayList<ChessBoardTile> getValidPositions(ChessBoard board, ChessBoardTile tile);
 
     /**
      * Used to get the positions that the piece can take other pieces from
      * @return Valid tiles
      */
-    public abstract ArrayList<Tile> getTakePositions(ChessBoard board, Tile tile);
+    public abstract ArrayList<ChessBoardTile> getTakePositions(ChessBoard board, ChessBoardTile tile);
 }

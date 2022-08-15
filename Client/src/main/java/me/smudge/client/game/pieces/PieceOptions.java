@@ -1,4 +1,4 @@
-package me.smudge.client.items.chessboard.pieces;
+package me.smudge.client.game.pieces;
 
 public class PieceOptions {
 

@@ -33,4 +33,23 @@ public class ChessMoveLog {
     public void add(ChessMove move) {
         this.log.add(move);
     }
+
+    /**
+     * Used to get the list of moves that have happened
+     * @return Log as a string
+     */
+    public String asString() {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("[");
+
+        for (ChessMove move : this.log) {
+            builder.append(move.asString());
+            builder.append(", ");
+        }
+
+        builder.append("]");
+
+        return builder.toString();
+    }
 }

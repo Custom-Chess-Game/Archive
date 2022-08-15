@@ -38,26 +38,32 @@ public class Application {
      * Create a new instance of the application
      */
     public Application(String caption) {
+        // Create the application window
         frame = new JFrame(caption);
 
+        // Set the frame defaults
         frame.setSize(Chess.getConfig().getScreenSize().get(0), Chess.getConfig().getScreenSize().get(1));
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        // Bind the application listener to the window
         ApplicationListener listener = new ApplicationListener();
         frame.addWindowListener(listener);
 
+        // Setup the window resize listener
         this.setupWindowReSizer();
 
+        // Set the application defaults
         Application.state = ApplicationState.Running;
         Application.setPage(new MainMenu());
 
+        // Start the application
         this.start();
     }
 
     /**
-     * When the window is resized
-     * - the screen size will be updated in the config
-     * - the page will be re-rendered
+     * When the window is resized:
+     * - The screen size will be updated in the config
+     * - The page will be re-rendered
      */
     private void setupWindowReSizer() {
         Application.frame.addComponentListener(
@@ -68,8 +74,11 @@ public class Application {
                     screenSize.add(componentEvent.getComponent().getWidth());
                     screenSize.add(componentEvent.getComponent().getHeight());
 
+                    // Update config values
                     Chess.getConfig().set("ScreenSize", screenSize);
-                    render();
+
+                    // Render the application
+                    Application.render();
                 }
             }
         );
@@ -93,6 +102,8 @@ public class Application {
 
         Page lastPage = null;
 
+        Console.print(ConsoleColour.GREEN + "Starting application");
+
         while (this.isRunning()) {
 
             long now = System.nanoTime();
@@ -115,6 +126,8 @@ public class Application {
                 frames = 0;
             }
         }
+
+        Console.print(ConsoleColour.GREEN + "Closing application");
     }
 
     /**
@@ -130,9 +143,10 @@ public class Application {
      */
     public static void render() {
         if (Application.page == null) return;
+        Application.removeItemsFromPage();
 
+        // Reset the background
         Application.removeBackground();
-
         Application.background = new JPanel();
         Application.background.setBackground(Color.BLACK);
         Application.background.setLayout(null);
@@ -141,6 +155,7 @@ public class Application {
         // Render page
         Application.page.render(Application.background);
 
+        // Add to the window
         Application.frame.add(Application.background);
         Application.frame.setVisible(true);
     }
@@ -210,8 +225,7 @@ public class Application {
      */
     public static Position getLocation() {
         return new Position(
-                Application.frame.getX(),
-                Application.frame.getY() + 30
+                Application.frame.getX(), Application.frame.getY() + 30
         );
     }
 }

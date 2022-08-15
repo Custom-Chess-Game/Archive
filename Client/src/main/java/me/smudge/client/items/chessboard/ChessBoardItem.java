@@ -1,7 +1,7 @@
 package me.smudge.client.items.chessboard;
 
 import me.smudge.client.game.ChessBoard;
-import me.smudge.client.game.Tile;
+import me.smudge.client.game.ChessBoardTile;
 import me.smudge.client.items.Item;
 import me.smudge.client.positions.ModularPosition;
 
@@ -11,7 +11,7 @@ import java.awt.*;
 /**
  * Represents the interface for the chessboard
  */
-public abstract class ChessItem extends Item {
+public abstract class ChessBoardItem extends Item {
 
     /**
      * The chessboard panel
@@ -22,7 +22,7 @@ public abstract class ChessItem extends Item {
      * Used to create a new chessboard interface
      * @param modularPosition The position of the chessboard
      */
-    public ChessItem(ModularPosition modularPosition) {
+    public ChessBoardItem(ModularPosition modularPosition) {
         super(modularPosition);
     }
 
@@ -56,12 +56,17 @@ public abstract class ChessItem extends Item {
     /**
      * When the mouse is hovering over a tile
      */
-    public abstract void onTileHover(Tile tile);
+    public abstract void onTileHover(ChessBoardTile tile);
 
     /**
      * When the mouse clicks a tile
      */
-    public abstract void onClick(Tile tile);
+    public abstract void onClick(ChessBoardTile tile);
+
+    /**
+     * When the application ticks
+     */
+    public abstract void tick();
 
     /**
      * Item hover events
@@ -71,6 +76,7 @@ public abstract class ChessItem extends Item {
 
     @Override
     public void updateItem() {
+        this.tick();
         if (this.getBoard() == null) return;
         this.onTileHover(this.getBoard().getTileAt(this.getMouseLocation()));
     }

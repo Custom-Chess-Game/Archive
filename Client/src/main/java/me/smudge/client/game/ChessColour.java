@@ -11,8 +11,8 @@ public enum ChessColour {
     /**
      * Get the opposite colour
      */
-    public static ChessColour opposite(ChessColour tileColour) {
-        if (tileColour == ChessColour.BLACK) return ChessColour.WHITE;
+    public static ChessColour opposite(ChessColour colour) {
+        if (colour == ChessColour.BLACK) return ChessColour.WHITE;
         return ChessColour.BLACK;
     }
 

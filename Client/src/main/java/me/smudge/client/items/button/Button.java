@@ -31,7 +31,7 @@ public class Button extends Item {
      */
     public Button(ModularPosition modularPosition) {
         super(modularPosition);
-        this.modularPosition = modularPosition;
+
         this.create();
     }
 
@@ -43,9 +43,7 @@ public class Button extends Item {
     public Button(ModularPosition modularPosition, ButtonText text) {
         super(modularPosition);
 
-        this.modularPosition = modularPosition;
         this.text = text;
-
         this.create();
     }
 
@@ -57,7 +55,6 @@ public class Button extends Item {
     public Button(ModularPosition modularPosition, ButtonText text, ButtonExecute executor) {
         super(modularPosition);
 
-        this.modularPosition = modularPosition;
         this.text = text;
         this.execute = executor;
 
@@ -76,6 +73,9 @@ public class Button extends Item {
                 this.getItemRegion().getMin().getY(),
                 this.modularPosition.getWidth(), this.modularPosition.getHeight()
         );
+
+        int fontSize = (int) (1 + (Math.min(this.modularPosition.getWidth(), this.modularPosition.getHeight()) * 0.3));
+        this.button.setFont(new Font(Font.DIALOG, Font.BOLD, fontSize));
 
         this.button.addActionListener(event -> execute.execute());
         this.button.setBackground(Color.white);

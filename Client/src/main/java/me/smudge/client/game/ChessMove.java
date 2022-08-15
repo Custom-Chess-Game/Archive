@@ -1,6 +1,7 @@
 package me.smudge.client.game;
 
-import me.smudge.client.items.chessboard.pieces.Piece;
+import me.smudge.client.engine.Console;
+import me.smudge.client.game.pieces.Piece;
 import me.smudge.client.positions.TilePosition;
 
 /**
@@ -11,8 +12,8 @@ public class ChessMove {
     /**
      * Where the piece has moved to and from
      */
-    private final Tile from;
-    private final Tile to;
+    private final ChessBoardTile from;
+    private final ChessBoardTile to;
 
     /**
      * The piece that was moved
@@ -24,7 +25,7 @@ public class ChessMove {
      * @param from The tile the piece was before the move
      * @param to The tile the piece has moved to
      */
-    public ChessMove(Tile from, Tile to, Piece piece) {
+    public ChessMove(ChessBoardTile from, ChessBoardTile to, Piece piece) {
         this.from = from;
         this.to = to;
         this.piece = piece;
@@ -76,9 +77,12 @@ public class ChessMove {
         return converted.toString();
     }
 
+    /**
+     * Used to debug and show the info contained in the chess move
+     */
     public void asDebug() {
-        System.out.println("--- Debug ---");
-        System.out.println("From : " + this.from.getTilePosition().asString());
-        System.out.println("To : " + this.to.getTilePosition().asString());
+        Console.print("--- Debug ---");
+        Console.print("From : " + this.from.getTilePosition().asString());
+        Console.print("To : " + this.to.getTilePosition().asString());
     }
 }

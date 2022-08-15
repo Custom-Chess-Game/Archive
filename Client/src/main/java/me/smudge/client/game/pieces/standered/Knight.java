@@ -1,8 +1,9 @@
-package me.smudge.client.items.chessboard.pieces;
+package me.smudge.client.game.pieces.standered;
 
 import me.smudge.client.game.ChessBoard;
+import me.smudge.client.game.ChessBoardTile;
 import me.smudge.client.game.ChessColour;
-import me.smudge.client.game.Tile;
+import me.smudge.client.game.pieces.Piece;
 import me.smudge.client.positions.TilePosition;
 
 import java.util.ArrayList;
@@ -36,8 +37,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public ArrayList<Tile> getValidPositions(ChessBoard board, Tile tile) {
-        ArrayList<Tile> tiles = new ArrayList<>();
+    public ArrayList<ChessBoardTile> getValidPositions(ChessBoard board, ChessBoardTile tile) {
+        ArrayList<ChessBoardTile> tiles = new ArrayList<>();
         TilePosition position = tile.getTilePosition();
 
         tiles.add(board.getTile(position.addVector(1, 2, this.getColour())));
@@ -54,7 +55,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public ArrayList<Tile> getTakePositions(ChessBoard board, Tile tile) {
+    public ArrayList<ChessBoardTile> getTakePositions(ChessBoard board, ChessBoardTile tile) {
         return this.getValidPositions(board, tile);
     }
 }
