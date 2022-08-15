@@ -10,6 +10,9 @@ import me.smudge.client.game.ChessMove;
  */
 public class Bot extends Controller {
 
+    /**
+     * The algorithm instance used by the bot
+     */
     private Algorithm algorithm;
 
     /**
@@ -33,5 +36,10 @@ public class Bot extends Controller {
         ChessMove move = this.algorithm.getMove(board, this.getColour());
         board.makeMove(move);
         return true;
+    }
+
+    @Override
+    public ControllerType getType() {
+        return ControllerType.BOT;
     }
 }

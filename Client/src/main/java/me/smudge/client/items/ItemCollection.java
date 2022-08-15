@@ -78,7 +78,7 @@ public class ItemCollection {
             double sizeY = item.getModularPosition().getFirstHeight() * sizeMultiplierY;
 
             // What column the item is in
-            int currentColumn = Math.round(index / (float)amountPerColumn);
+            int currentColumn = (int) Math.ceil(index / (double)amountPerColumn);
             if (currentColumn == 0) currentColumn = 1;
 
             // What row the item is on

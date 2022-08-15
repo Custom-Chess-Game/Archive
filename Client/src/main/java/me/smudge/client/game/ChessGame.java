@@ -4,7 +4,7 @@ import me.smudge.client.controllers.Controller;
 import me.smudge.client.engine.Application;
 import me.smudge.client.game.layout.BoardLayout;
 import me.smudge.client.items.chessboard.ChessBoardItem;
-import me.smudge.client.pages.GameEnd;
+import me.smudge.client.pages.game.GameEnd;
 import me.smudge.client.positions.BoardSize;
 import me.smudge.client.positions.ModularPosition;
 

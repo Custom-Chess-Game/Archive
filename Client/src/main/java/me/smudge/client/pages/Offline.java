@@ -1,10 +1,14 @@
 package me.smudge.client.pages;
 
+import me.smudge.client.controllers.Player;
 import me.smudge.client.engine.Application;
+import me.smudge.client.game.ChessColour;
 import me.smudge.client.items.ItemCollection;
 import me.smudge.client.items.button.Button;
 import me.smudge.client.items.button.ButtonExecute;
 import me.smudge.client.items.button.ButtonText;
+import me.smudge.client.pages.game.Game;
+import me.smudge.client.pages.offline.Normal;
 import me.smudge.client.positions.ModularPosition;
 
 public class Offline extends Page {
@@ -24,7 +28,10 @@ public class Offline extends Page {
         this.itemCollection.addItem(new Button(
                 new ModularPosition(400, 100).setCentered(true),
                 new ButtonText("Normal"),
-                new ButtonExecute(() -> Application.setPage(new Normal()))
+                new ButtonExecute(() -> Application.setPage(new Normal(
+                        new Player(ChessColour.WHITE),
+                        new Player(ChessColour.BLACK)
+                )))
         ));
 
         this.itemCollection.addItem(new Button(

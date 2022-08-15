@@ -34,6 +34,12 @@ public abstract class Controller {
     public abstract boolean onMyTurn(ChessBoard board);
 
     /**
+     * Used to get the controller type
+     * @return Controller type
+     */
+    public abstract ControllerType getType();
+
+    /**
      * Used to get the controllers colour that they play as
      */
     public ChessColour getColour() {

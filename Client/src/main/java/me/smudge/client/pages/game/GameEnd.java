@@ -1,4 +1,4 @@
-package me.smudge.client.pages;
+package me.smudge.client.pages.game;
 
 import me.smudge.client.engine.Application;
 import me.smudge.client.game.ChessColour;
@@ -8,6 +8,8 @@ import me.smudge.client.items.button.Button;
 import me.smudge.client.items.button.ButtonExecute;
 import me.smudge.client.items.button.ButtonText;
 import me.smudge.client.items.text.Text;
+import me.smudge.client.pages.MainMenu;
+import me.smudge.client.pages.Page;
 import me.smudge.client.positions.ModularPosition;
 
 /**
