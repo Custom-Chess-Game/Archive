@@ -20,6 +20,9 @@ import me.smudge.client.positions.BoardSize;
 import me.smudge.client.positions.ModularPosition;
 import me.smudge.client.positions.Position;
 
+/**
+ * Represents the normal game options page
+ */
 public class Normal extends Page {
 
     /**
@@ -33,8 +36,6 @@ public class Normal extends Page {
      */
     private Controller player1;
     private Controller player2;
-
-    private Button create;
 
     /**
      * New instance of the normal menu
@@ -99,8 +100,6 @@ public class Normal extends Page {
                 new ButtonText("Start"),
                 new ButtonExecute(() -> Application.setPage(new Game(chessBoard)))
         );
-
-        this.addItem(create);
 
         this.itemCollection.addItem(player1Text);
         this.itemCollection.addItem(player1Button);

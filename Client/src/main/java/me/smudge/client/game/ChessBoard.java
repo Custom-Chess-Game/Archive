@@ -402,18 +402,26 @@ public class ChessBoard {
         return listOfTiles;
     }
 
-    public void asString() {
+    /**
+     * Get the board as a string
+     * @return Presentation of the board
+     */
+    public String asString() {
+        StringBuilder builder = new StringBuilder();
+
         for (int y = 1; y < this.amountOfTilesX + 1; y++) {
             for (int x = 1; x < this.amountOfTilesY + 1; x++) {
                 ChessBoardTile tile = this.getTile(new TilePosition(x, y));
                 if (this.isPieceAt(tile.getTilePosition())) {
-                    System.out.print(this.getTile(new TilePosition(x, y)).getPiece().getClass().getSimpleName().split("")[0]);
+                    builder.append(this.getTile(new TilePosition(x, y)).getPiece().getClass().getSimpleName().split("")[0]);
                 }
                 else {
-                    System.out.print("x");
+                    builder.append("-");
                 }
             }
-            System.out.println();
+            builder.append("\n");
         }
+
+        return builder.toString();
     }
 }

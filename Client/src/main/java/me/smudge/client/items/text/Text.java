@@ -38,7 +38,7 @@ public class Text extends Item {
      */
     public void create() {
         // <html> Allows the text to wrap
-        this.label = new JLabel("<html>"+ this.text +"</html>", SwingConstants.CENTER);
+        this.label = new JLabel("<html>" + this.text + "</html>", SwingConstants.CENTER);
 
         this.label.setBounds(
                 this.modularPosition.getPos1().getX(),

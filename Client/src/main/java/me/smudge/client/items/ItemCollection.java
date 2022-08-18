@@ -48,8 +48,7 @@ public class ItemCollection {
      */
     public void calculate() {
         // Amount of items per column
-        int amountPerColumn = this.getModularItems().size() / this.columns;
-        if (this.columns > 1) amountPerColumn = (this.getModularItems().size() / this.columns) + 1;
+        int amountPerColumn = (int) Math.ceil(this.getModularItems().size() / (double)this.columns);
 
         for (Item item : this.items) {
             if (item.getModularPosition() == null) continue;
@@ -79,6 +78,7 @@ public class ItemCollection {
 
             // What column the item is in
             int currentColumn = (int) Math.ceil(index / (double)amountPerColumn);
+            if (index / (double)amountPerColumn == 1) currentColumn = index / amountPerColumn;
             if (currentColumn == 0) currentColumn = 1;
 
             // What row the item is on

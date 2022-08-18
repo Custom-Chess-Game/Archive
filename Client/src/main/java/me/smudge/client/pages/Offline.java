@@ -7,7 +7,6 @@ import me.smudge.client.items.ItemCollection;
 import me.smudge.client.items.button.Button;
 import me.smudge.client.items.button.ButtonExecute;
 import me.smudge.client.items.button.ButtonText;
-import me.smudge.client.pages.game.Game;
 import me.smudge.client.pages.offline.Normal;
 import me.smudge.client.positions.ModularPosition;
 

@@ -8,7 +8,7 @@ import me.smudge.client.positions.TilePosition;
 /**
  * Represents the default chess board layout
  */
-public class BoardLayoutDefault extends BoardLayout {
+public class BoardLayoutDefault implements BoardLayout {
 
     @Override
     public void update(ChessBoard board) {

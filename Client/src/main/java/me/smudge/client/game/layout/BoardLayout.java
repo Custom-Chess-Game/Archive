@@ -5,12 +5,11 @@ import me.smudge.client.game.ChessBoard;
 /**
  * Represents a chess board layout
  */
-public abstract class BoardLayout {
+public interface BoardLayout {
 
     /**
      * Used to update the board to the layout
      * @param board Instance of the chessboard
      */
-    public abstract void update(ChessBoard board);
-
+    void update(ChessBoard board);
 }

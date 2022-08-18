@@ -1,8 +1,8 @@
 package me.smudge.client.pages.game;
 
 import me.smudge.client.engine.Application;
+import me.smudge.client.game.ChessBoard;
 import me.smudge.client.game.ChessColour;
-import me.smudge.client.game.ChessMoveLog;
 import me.smudge.client.items.ItemCollection;
 import me.smudge.client.items.button.Button;
 import me.smudge.client.items.button.ButtonExecute;
@@ -13,7 +13,7 @@ import me.smudge.client.pages.Page;
 import me.smudge.client.positions.ModularPosition;
 
 /**
- * Represents the menu when a game ends
+ * Represents the menu when the game ends
  */
 public class GameEnd extends Page {
 
@@ -27,9 +27,9 @@ public class GameEnd extends Page {
      * New instance of the game end menu
      * @param colour The colour of the winning player
      *               This can be null if it's a tie
-     * @param log The log of the moves in the game
+     * @param board The board instance
      */
-    public GameEnd(ChessColour colour, ChessMoveLog log) {
+    public GameEnd(ChessColour colour, ChessBoard board) {
         this.itemCollection = new ItemCollection().setColumns(2);
 
         this.itemCollection.addItem(new Text(
@@ -45,7 +45,12 @@ public class GameEnd extends Page {
 
         this.itemCollection.addItem(new Text(
                 new ModularPosition(200, 50),
-                log.asString()
+                board.getLog().asString()
+        ));
+
+        this.itemCollection.addItem(new Text(
+                new ModularPosition(100, 200),
+                board.asString().replace("\n", "<br>")
         ));
 
         this.itemCollection.toPage(this);

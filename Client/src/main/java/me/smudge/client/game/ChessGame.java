@@ -167,7 +167,7 @@ public class ChessGame extends ChessBoardItem {
      */
     private void switchTurn() {
         if (this.checkIfGameHasEnded()) {
-            Application.setPage(new GameEnd(ChessColour.opposite(this.turn), this.board.getLog()));
+            Application.setPage(new GameEnd(ChessColour.opposite(this.turn), this.board));
             return;
         }
 
