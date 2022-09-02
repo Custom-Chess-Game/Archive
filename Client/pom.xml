@@ -58,13 +58,21 @@
     </build>
 
     <dependencies>
-        <!-- Snake YML -->
+        <!-- Snake YML - For configuration -->
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.12</version>
+            <version>1.30</version>
             <type>jar</type>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- Jupiter - For tests -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.9.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

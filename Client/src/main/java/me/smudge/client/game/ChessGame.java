@@ -104,6 +104,7 @@ public class ChessGame extends ChessBoardItem {
 
     /**
      * Used to reset the tiles to its original colour
+     * after highlighting them with the cursor
      * @param tile The pieces possible moves to reset
      */
     public void resetTiles(ChessBoardTile tile) {
@@ -157,7 +158,7 @@ public class ChessGame extends ChessBoardItem {
     /**
      * Used to get the player whose turn it is
      */
-    private Controller getWhoseTurn() {
+    public Controller getWhoseTurn() {
         if (this.turn == this.player1.getColour()) return this.player1;
         return this.player2;
     }
