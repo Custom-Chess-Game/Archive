@@ -74,6 +74,12 @@
             <version>5.9.0</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.Smuddgge</groupId>
+            <artifactId>Chess.NetworkAPI</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>
